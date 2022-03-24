@@ -5,9 +5,9 @@
 #include <fstream>
 
 
-namespace MyTools 
+namespace MyTools
 {
-   
+
     enum ConsoleColor
     {
         CC_Black = 0,
@@ -27,12 +27,12 @@ namespace MyTools
         CC_Yellow,
         CC_White
     };
-	//=============================================================================================
+    //=============================================================================================
     class ScreenSingleton
     {
     public:
         static ScreenSingleton& getInstance()
-        { 
+        {
             static ScreenSingleton theInstance;
             return theInstance;
         }
@@ -49,8 +49,8 @@ namespace MyTools
         ScreenSingleton& operator=(const ScreenSingleton&&) = delete;
     };
 
-	
-	//=============================================================================================
+
+    //=============================================================================================
 
     class LoggerSingleton
     {
@@ -76,7 +76,7 @@ namespace MyTools
     };
 
     std::string GetCurDateTime();
-   
-	//=============================================================================================
+
+    //=============================================================================================
 
 };

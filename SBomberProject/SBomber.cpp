@@ -60,7 +60,7 @@ SBomber::SBomber()
     pTank->SetPos(50, groundY - 1);
     vecStaticObj.push_back(pTank);
 
-    House * pHouse = new House;
+    House* pHouse = new House;
     pHouse->SetWidth(13);
     pHouse->SetPos(80, groundY - 1);
     vecStaticObj.push_back(pHouse);
@@ -123,7 +123,7 @@ void SBomber::CheckPlaneAndLevelGUI()
     }
 }
 
-void SBomber::CheckBombsAndGround() 
+void SBomber::CheckBombsAndGround()
 {
     vector<Bomb*> vecBombs = FindAllBombs();
     Ground* pGround = FindGround();
@@ -140,7 +140,7 @@ void SBomber::CheckBombsAndGround()
 
 }
 
-void SBomber::CheckDestoyableObjects(Bomb * pBomb)
+void SBomber::CheckDestoyableObjects(Bomb* pBomb)
 {
     vector<DestroyableGroundObject*> vecDestoyableObjects = FindDestoyableGroundObjects();
     const double size = pBomb->GetWidth();
@@ -214,7 +214,7 @@ Ground* SBomber::FindGround() const
 
     for (size_t i = 0; i < vecStaticObj.size(); i++)
     {
-        pGround = dynamic_cast<Ground *>(vecStaticObj[i]);
+        pGround = dynamic_cast<Ground*>(vecStaticObj[i]);
         if (pGround != nullptr)
         {
             return pGround;

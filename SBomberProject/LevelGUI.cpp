@@ -21,9 +21,9 @@ void LevelGUI::Draw() const
     cout << buf;
     ScreenSingleton::getInstance().GotoXY(x, y + height);
     cout << buf;
-    delete [] buf;
+    delete[] buf;
     buf = nullptr;
-    
+
     for (size_t i = size_t(y); i < height + y; i++)
     {
         ScreenSingleton::getInstance().GotoXY(x, (double)i);
