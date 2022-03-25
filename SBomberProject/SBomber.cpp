@@ -1,7 +1,7 @@
 
 #include <conio.h>
 #include <windows.h>
-
+#include "ProxyLogger.h"
 #include "MyTools.h"
 #include "SBomber.h"
 #include "Bomb.h"
@@ -24,7 +24,8 @@ SBomber::SBomber()
     bombsNumber(10),
     score(0)
 {
-    LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    ProxyLoggerNSP::ProxyLogger::WriteToLog(std::string(__FUNCTION__) + " was invoked");
 
     Plane* p = new Plane;
     p->SetDirection(1, 0.1);
