@@ -3,7 +3,7 @@
 #include "MyTools.h"
 namespace ProxyLoggerNSP
 {
-    MyTools::LoggerSingleton* _realLogger = &(MyTools::LoggerSingleton::getLoggerSingleton());
+   /* MyTools::LoggerSingleton* _realLogger = &(MyTools::LoggerSingleton::getLoggerSingleton());
     int ProxyLogger::counter = 0;
 
     ProxyLogger::ProxyLogger()
@@ -14,9 +14,9 @@ namespace ProxyLoggerNSP
     {
         std::cout << "Kolichestvo logov " << counter;
         delete _realLogger;
-    }
+    }*/
     
-    void __fastcall ProxyLogger::WriteToLog(const std::string& str)
+    /*void __fastcall ProxyLogger::WriteToLog(const std::string& str)
     {
         _realLogger->WriteToLog(str);
         counter++;
@@ -30,5 +30,5 @@ namespace ProxyLoggerNSP
     {
         _realLogger->WriteToLog(str, d);
         counter++;
-    }
+    }*/
 }

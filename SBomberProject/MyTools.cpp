@@ -10,13 +10,12 @@ using namespace std;
 
 namespace MyTools
 {
-    ofstream logOut;
     //============================================================================================
     void ScreenSingleton::ClrScr()
     {
         system("cls");
     }
-
+        
     void __fastcall ScreenSingleton::GotoXY(double x, double y)
     {
         const COORD cc = { short(x), short(y) };
@@ -56,24 +55,19 @@ namespace MyTools
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, color); // color =  (WORD)((BackgroundColor << 4) | TextColor))
     }
-
-
-
-
-
     //=============================================================================================
 
 
     void __fastcall LoggerSingleton::OpenLogFile(const std::string& FN)
     {
-        logOut.open(FN, ios_base::out);
+        this->logOut.open(FN, ios_base::out);
     }
 
     void LoggerSingleton::CloseLogFile()
     {
-        if (logOut.is_open())
+        if (this->logOut.is_open())
         {
-            logOut.close();
+            this->logOut.close();
         }
     }
 
@@ -89,26 +83,59 @@ namespace MyTools
 
     void __fastcall LoggerSingleton::WriteToLog(const std::string& str)
     {
-        if (logOut.is_open())
+        if (this->logOut.is_open())
         {
-            logOut << GetCurDateTime() << " - " << str << endl;
+            this->logOut << GetCurDateTime() << " - " << str << endl;
         }
     }
 
     void __fastcall LoggerSingleton::WriteToLog(const std::string& str, int n)
     {
-        if (logOut.is_open())
+        if (this->logOut.is_open())
         {
-            logOut << GetCurDateTime() << " - " << str << n << endl;
+            this->logOut << GetCurDateTime() << " - " << str << n << endl;
         }
     }
 
     void __fastcall LoggerSingleton::WriteToLog(const std::string& str, double d)
     {
-        if (logOut.is_open())
+        if (this->logOut.is_open())
         {
-            logOut << GetCurDateTime() << " - " << str << d << endl;
+            this->logOut << GetCurDateTime() << " - " << str << d << endl;
         }
     }
+
+    ProxyLogger::~ProxyLogger()
+    {
+        delete _realLogger;
+        std::cout << "Kolichestvo logov " << _counter;
+    }
+
+    void __fastcall ProxyLogger::WriteToLog(const std::string& str)
+    {
+        _realLogger->WriteToLog(str);
+        _counter++;
+    }
+    void __fastcall ProxyLogger::WriteToLog(const std::string& str, int n)
+    {
+        _realLogger->WriteToLog(str, n);
+        _counter++;
+    }
+    void __fastcall ProxyLogger::WriteToLog(const std::string& str, double d)
+    {
+        _realLogger->WriteToLog(str, d);
+        _counter++;
+    }
+
+    void __fastcall ProxyLogger::OpenLogFile(const std::string& FN)
+    {
+        _realLogger->OpenLogFile(FN);
+    }
+    void ProxyLogger::CloseLogFile()
+    {
+        _realLogger->CloseLogFile();
+    }
 }
+
+
     //=============================================================================================

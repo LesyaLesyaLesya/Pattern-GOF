@@ -13,6 +13,7 @@ using namespace std;
 
 using namespace MyTools;
 
+ProxyLogger proxyLog(&(LoggerSingleton::getLoggerSingleton()));
 
 SBomber::SBomber()
     : exitFlag(false),
@@ -24,8 +25,10 @@ SBomber::SBomber()
     bombsNumber(10),
     score(0)
 {
+    //ProxyLogger proxyLog(&(LoggerSingleton::getLoggerSingleton()));
+
     //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
-    ProxyLoggerNSP::ProxyLogger::WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    proxyLog.WriteToLog(std::string(__FUNCTION__) + " was invoked");
 
     Plane* p = new Plane;
     p->SetDirection(1, 0.1);
@@ -97,7 +100,8 @@ SBomber::~SBomber()
 
 void SBomber::MoveObjects()
 {
-    LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    proxyLog.WriteToLog(std::string(__FUNCTION__) + " was invoked");
 
     for (size_t i = 0; i < vecDynamicObj.size(); i++)
     {
@@ -110,7 +114,8 @@ void SBomber::MoveObjects()
 
 void SBomber::CheckObjects()
 {
-    LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    proxyLog.WriteToLog(std::string(__FUNCTION__) + " was invoked");
 
     CheckPlaneAndLevelGUI();
     CheckBombsAndGround();
@@ -278,7 +283,9 @@ void SBomber::ProcessKBHit()
         c = _getch();
     }
 
-    LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked. key = ", c);
+    //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked. key = ", c);
+
+    proxyLog.WriteToLog(std::string(__FUNCTION__) + " was invoked. key = ", c);
 
     switch (c) {
 
@@ -309,7 +316,8 @@ void SBomber::ProcessKBHit()
 
 void SBomber::DrawFrame()
 {
-    LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+    proxyLog.WriteToLog(std::string(__FUNCTION__) + " was invoked");
 
     for (size_t i = 0; i < vecDynamicObj.size(); i++)
     {
@@ -345,14 +353,16 @@ void SBomber::TimeFinish()
     deltaTime = uint16_t(finishTime - startTime);
     passedTime += deltaTime;
 
-    LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
+    //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
+    proxyLog.WriteToLog(std::string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
 }
 
 void SBomber::DropBomb()
 {
     if (bombsNumber > 0)
     {
-        LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+        //LoggerSingleton::getLoggerSingleton().WriteToLog(std::string(__FUNCTION__) + " was invoked");
+        proxyLog.WriteToLog(std::string(__FUNCTION__) + " was invoked");
 
         Plane* pPlane = FindPlane();
         double x = pPlane->GetX() + 4;
