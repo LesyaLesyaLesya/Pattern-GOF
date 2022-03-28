@@ -41,18 +41,33 @@ namespace MyTools
         uint16_t GetMaxX();
         uint16_t GetMaxY();
         void SetColor(ConsoleColor color);
+
     private:
-        ScreenSingleton() {};
+       
+        ScreenSingleton(){};
         ScreenSingleton(const ScreenSingleton&) = delete;
         ScreenSingleton& operator=(const ScreenSingleton&) = delete;
         ScreenSingleton(ScreenSingleton&&) = delete;
         ScreenSingleton& operator=(const ScreenSingleton&&) = delete;
+
     };
 
 	
 	//=============================================================================================
+    class LoggerInterface
+    {
+    public:
+        virtual ~LoggerInterface() = default;
+        virtual void __fastcall OpenLogFile(const std::string& FN) = 0;
+        virtual void CloseLogFile() = 0;
+        virtual void __fastcall WriteToLog(const std::string& str) = 0;
+        virtual void __fastcall WriteToLog(const std::string& str, int n) = 0;
+        virtual void __fastcall WriteToLog(const std::string& str, double d) = 0;
+    private:
+       
+    };
 
-    class LoggerSingleton
+    class LoggerSingleton : LoggerInterface
     {
     public:
         static LoggerSingleton& getLoggerSingleton()
@@ -61,11 +76,11 @@ namespace MyTools
             return myLoggerSingleton;
         }
 
-        void __fastcall OpenLogFile(const std::string& FN);
-        void CloseLogFile();
-        void __fastcall WriteToLog(const std::string& str);
-        void __fastcall WriteToLog(const std::string& str, int n);
-        void __fastcall WriteToLog(const std::string& str, double d);
+        void __fastcall OpenLogFile(const std::string& FN) override;
+        void CloseLogFile() override;
+        void __fastcall WriteToLog(const std::string& str) override;
+        void __fastcall WriteToLog(const std::string& str, int n) override;
+        void __fastcall WriteToLog(const std::string& str, double d) override;
 
     private:
         LoggerSingleton() {};
@@ -73,8 +88,28 @@ namespace MyTools
         LoggerSingleton& operator=(LoggerSingleton&) = delete;
         LoggerSingleton(LoggerSingleton&&) = delete;
         LoggerSingleton& operator=(LoggerSingleton&&) = delete;
+
+        std::ofstream logOut;
     };
 
+    class ProxyLogger : public LoggerInterface
+    {
+    public:
+        ProxyLogger(LoggerSingleton* realLogger) :_realLogger(realLogger) {};
+        ~ProxyLogger() override;
+
+        void __fastcall OpenLogFile(const std::string& FN) override;
+        void CloseLogFile() override;
+        void __fastcall WriteToLog(const std::string& str) override;
+        void __fastcall WriteToLog(const std::string& str, int n) override;
+        void __fastcall WriteToLog(const std::string& str, double d) override;
+
+    private:
+  
+        //std::unique_ptr<LoggerInterface> _realLogger;
+        LoggerSingleton* _realLogger;
+        int _counter{0};
+    };
     std::string GetCurDateTime();
    
 	//=============================================================================================
