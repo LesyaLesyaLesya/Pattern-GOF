@@ -72,7 +72,7 @@ namespace MyTools
     public:
         static LoggerSingleton& getLoggerSingleton()
         {
-            LoggerSingleton myLoggerSingleton;
+            static LoggerSingleton myLoggerSingleton;
             return myLoggerSingleton;
         }
 

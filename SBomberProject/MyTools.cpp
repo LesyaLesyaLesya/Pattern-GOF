@@ -107,7 +107,7 @@ namespace MyTools
 
     ProxyLogger::~ProxyLogger()
     {
-        delete _realLogger;
+        //delete _realLogger;
         std::cout << "Kolichestvo logov " << _counter;
     }
 
